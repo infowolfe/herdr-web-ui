@@ -108,7 +108,8 @@ export type { Machine, MachineEvent, PaneTarget, SetupJob, SetupRequest, SetupAc
  *  GET    /api/pane/conversation?pane_id=    -> ConversationResponse (structured agent
  *         transcript turns - claude, codex, omp, omo, gjc, pi, devin, OpenCode, hermes or grok;
  *         source:"scrollback" when the pane has no recognized, readable store.
- *         Grok requires exact live process/session evidence; rewinds invalidate cursors.)
+ *         Grok requires exact live process/session evidence; rewinds invalidate cursors.
+ *         Grok's optional activity describes its latest native turn, independently of pane status.)
  *  POST   /api/pane/close { pane_id }         -> { ok: true } (pane.close RPC; the collector's
  *         session-changed broadcast removes it from every client's sidebar)
  *  POST   /api/pane/rename { pane_id, label } -> { ok: true } (pane.rename; empty label clears it)
@@ -470,6 +471,8 @@ export interface OmoActivity {
 
 /** GET /api/pane/conversation: native conversation with settings, or scrollback fallback. */
 export interface ConversationResponse {
+  /** Grok's latest native turn; display feedback only, never input-delivery authority. */
+  activity?: "thinking" | "working" | "idle";
   /** Stable across appends; changes on transcript replacement or native context clear. */
   history_id?: string;
   source: "grok-transcript" | "claude-transcript" | "omp-transcript" | "omo-transcript" | "gjc-transcript" | "pi-transcript" | "codex-transcript" | "devin-transcript" | "opencode-transcript" | "hermes-transcript" | "scrollback";

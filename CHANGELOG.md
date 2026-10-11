@@ -63,6 +63,7 @@ between releases do not reach them. Remote-PC runtime bundles are versioned sepa
   ([#673](https://github.com/devswha/herdr-web-ui/pull/673) by @WOULDU-pres)
 
 ### Fixed
+- Grok Chat shows native thinking and working activity, opens live tool rows even when Herdr reports ready or done, and explains when native chat is unavailable.
 - When a chat message is not sent because Claude Code's input box in the terminal is not empty,
   the note now says what the box holds, and a one-line draft there can be cleared from the chat
   with Clear it and send. The chat did not show that text, so Send seemed to do nothing until the
